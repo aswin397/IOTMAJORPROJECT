@@ -1,0 +1,45 @@
+{% extends "User/index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <h2> Bills </h2>
+        <br>
+        <br>
+        {% if bills %}
+            
+   
+        {% for bill in bills %}
+        <div class="col-md-4 mb-4">
+            <div class="card bg-light border-0 rounded shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-primary mb-4">Bill ID: {{ bill.id }}</h5>
+                    <p class="card-text">Kilowatt Hours (kWh): {{ bill.kwh }}</p>
+                    <p class="card-text">Rate: {{ bill.rate }}</p>
+                    <p class="card-text">Month: {{ bill.month }}</p>
+                    <p class="card-text">Generation Date: {{ bill.BillGenerationdate }}</p>
+                    <p class="card-text">Payment Date: {{ bill.paymentDate }}</p>
+                    <p class="card-text">Status: {{ bill.status }}</p>
+                    {% if bill.file %}
+                    <a href="{{ bill.file.url }}" class="btn btn-primary btn-sm mr-2" target="_blank">View Bill</a>
+                    {% else %}
+                    <p class="text-muted mb-0">No Bill Uploaded</p>
+                    {% endif %}
+                    <br>
+                    <br>
+                    <form action="{% url 'User:bills2' bill.id %}" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-success btn-sm mt-2">Pay Now</button>
+                    </form>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        NO BILLS
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

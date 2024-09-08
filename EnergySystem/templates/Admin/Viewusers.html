@@ -1,0 +1,99 @@
+{% extends "Admin/index.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Electricity Consumer Details</h1>
+    <form class="form-inline mb-3" id="searchForm">
+        <div class="form-group mr-2">
+            <label for="consumerId">Consumer ID:</label>
+            <input type="text" class="form-control" id="consumerId" name="consumerId">
+        </div>
+        <div class="form-group mr-2">
+            <label for="officeId">Office Name :</label>
+            <input type="text" class="form-control" id="officeId" name="officeId">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <table class="table" id="consumerTable">
+        <thead>
+            <tr>
+                <th>#id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Connection Number</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Office Name</th>
+                <th>Connection Date</th>
+                <th>Status</th>
+                <th>Last Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consumer in consumers %}
+            <tr>
+                <td>{{ consumer.id }}</td>
+                <td>{{ consumer.name }}</td>
+                <td>{{ consumer.address }}</td>
+                <td>{{ consumer.connection_number }}</td>
+                <td>{{ consumer.phone_number }}</td>
+                <td>{{ consumer.email }}</td>
+                <td>{{ consumer.office_id.name }}</td>
+                <td>{{ consumer.connection_date }}</td>
+                <td>{% if status %}
+                    Active
+                    {% else %}
+                    Deactivated
+                {% endif %}</td>
+                <td>{{ consumer.lastupdate }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9">No consumers found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#searchForm').on('submit', function(event) {
+            event.preventDefault();
+            
+            var consumerId = $('#consumerId').val().trim();
+            var officeId = $('#officeId').val().trim();
+
+            $('#consumerTable tbody tr').each(function() {
+                var consumerIdCell = $(this).find('td:eq(0)').text().trim(); // Assuming consumer ID is in the third column
+                var officeIdCell = $(this).find('td:eq(6)').text().trim(); // Assuming office ID is in the sixth column
+
+                if ((consumerId !== '' && consumerIdCell !== consumerId) || (officeId !== '' && officeIdCell !== officeId)) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "KSEB/index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Announcement</h2>
+    <form action="{% url 'KSEB:ANNOUNCEMENT' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="msg">Message:</label>
+            <textarea class="form-control" id="msg" name="msg" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Announcement</button>
+    </form>
+
+    <hr>
+
+    <h2>Announcements</h2>
+    <ul class="list-group">
+        {% for announcement in data %}
+        <li class="list-group-item">
+            <p>{{ announcement.msg }}</p>
+            <form action="{% url 'KSEB:delete_announcement' announcement.id %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+    integrity="sha384-AvEHAe4+CGw/yZtV0kMv8TyssBtxc18JVvQVvcjzJV6CzqKkZXJHvThii8qzqipM"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCj5Em+GLelJQ7i8RHz/Jgo3E93hx4D4Z6j5"
+    crossorigin="anonymous"></script>
+
+{% endblock %}

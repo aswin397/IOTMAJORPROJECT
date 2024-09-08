@@ -1,0 +1,73 @@
+<!-- home.html -->
+<html>
+
+<head>
+<style>
+    body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(0,0,0,0.1);
+    margin-left: 50;
+    margin-right: 50;
+    
+}
+.main{
+    height: 95vh;
+    background-color: whitesmoke;
+    width: 120vh;
+    margin-left: 50vh;
+    margin-right: 80vh;
+    margin-top: 0vh;
+    border-radius: 5px;
+    
+}
+.Payment{
+    margin-left: 18vh;
+}
+.input{
+    margin-left: 8vh;
+    margin-top: 8vh;
+}
+.input input{
+    width: 60vh;
+}
+.pay{
+    margin-top: 5vh;
+    margin-left: 8vh;
+    
+}
+.pay1{
+
+    width: 62vh;
+    background-color:#1a53ff;
+}
+</style>
+</head>
+<body>
+<br>
+<br>
+
+    <div class="main">
+        <center>
+        <div class="Payment">
+            <h2>Payment Gateway</h2>
+        </div><form action="{% url 'User:payments' %}" method="post">
+            {% csrf_token %}
+        <div class="input">
+            <p>Card Number</p>
+            <input type="number" placeholder="Enter the card details" required>
+            <p> CardHolder Name</p>
+            <input type="text" placeholder="Enter the Cardholder Name" required>
+            <p> Expiration Date</p>
+            <input type="month"  required>
+            <p> CVV</p>
+            <input type="number" placeholder="Enter CVV" required>
+        </div>
+        <div class="pay">
+           <input type="submit" id="pay" name="pay" class="pay1" value="PAY">
+        </div></form></center>
+    </div>
+
+<br>
+<br></body>
+</html>

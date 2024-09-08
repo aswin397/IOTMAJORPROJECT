@@ -1,0 +1,141 @@
+{% extends 'Guest/index.html' %}
+
+{% block content %}
+<style>
+       body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 15px 15px 0 0;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }   
+</style>
+
+
+
+<center>
+	<div class="error-pagewrap">
+		<div class="error-page-int">
+			<div class="text-center m-b-md custom-login">
+				<h3>PLEASE LOGIN TO APP</h3>
+				<p>This is the best app ever!</p>
+			</div>
+			<div class="content-error">
+				<div class="hpanel">
+                    <div class="panel-body">
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label class="control-label" for="username">Username</label>
+                                <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="username" id="userid" class="form-control">
+                                <span class="help-block small">Your unique username to app</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="password">Password</label>
+                                <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="password" id="password" class="form-control">
+                                <span class="help-block small">Yur strong password</span>
+                            </div>
+                            <div class="mb-3">
+                              <label for="type" class="form-label">Type</label>
+                              <div style="width: 5cm;">
+                              <select class="form-select" id="type" required>
+                                  <option value="">Select Type</option>
+                                  <option value="Admin">Admin</option>
+                                  <option value="KSEB_Office">KSEB_Office</option>
+                                  <option value="User">User</option>
+                              </select>
+                          </div>
+                          </div>
+                          <br>
+                          <br>
+                          <br>
+                            <button class="btn btn-success btn-block loginbtn">Login</button>
+                        </form>
+                    </div>
+                </div>
+			</div>
+			<div class="text-center login-footer">
+				<p>Copyright © 2018. All rights reserved. Template by KSEB</p>
+			</div>
+		</div>   
+    </div>
+</center>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#loginForm').submit(function (event) {
+            event.preventDefault();
+            var userid = $('#userid').val();
+            var password = $('#password').val();
+            var type = $('#type').val();
+            
+            if (userid && password && type) {
+                $.ajax({
+                    url: "/Login",
+                    method: "POST",
+                    data: {
+                        "userid": userid,
+                        "password": password,
+                        "type": type
+                    },
+                    timeout: 30000,
+                    success: function (data) {
+                        if (data.status == 1) {
+                            alert("Admin Login successful!");
+                            window.location.href = "{% url 'Admin:home' %}";
+                        } else if (data.status == 2) {
+                            alert("Office Login successful!");
+                            window.location.href = "{% url 'KSEB:home' %}";
+                        } else if (data.status == 3) {
+                            alert("User Login successful!");
+                            window.location.href = "{% url 'User:home' %}";
+                         
+                        }else {
+                            alert("Invalid login details");
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("AJAX request failed:", textStatus, errorThrown);
+                    }
+                });
+            } else {
+                alert("Please enter all fields.");
+            }
+        });
+    });
+</script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

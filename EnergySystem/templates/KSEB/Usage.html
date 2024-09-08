@@ -1,0 +1,70 @@
+{% extends "KSEB/index.html" %}
+
+{% block content %}
+<div class="content-wrapper">
+
+    <div class="container mt-5 col-md-11">
+        <h1>Electricity Consumers</h1>
+
+        <!-- Search form -->
+        <div class="form-group mb-3">
+            <label for="searchId">Search by ID:</label>
+            <input type="text" class="form-control" id="searchId" placeholder="Enter ID...">
+        </div>
+
+        <table class="table" id="consumersTable" style="color: aliceblue;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Connection Number</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consumer in consumers %}
+                <tr>
+                    <td>{{ consumer.id }}</td>
+                    <td>{{ consumer.name }}</td>
+                    <td>{{ consumer.address }}</td>
+                    <td>{{ consumer.connection_number }}</td>
+                    <td>{{ consumer.phone_number }}</td>
+                    <td>{{ consumer.email }}</td>       
+                    <td>
+                        <div class="btn-group">
+                            <form action="{% url 'KSEB:view_more' consumer.id %}" method="get" class="mr-1">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">View More</button>
+                            </form>
+                          
+                        </div
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+        $('#searchId').on('keyup', function() {
+            var searchText = $(this).val().toLowerCase();
+            $('#consumersTable tbody tr').each(function() {
+                var firstColumnText = $(this).find('td:first').text().toLowerCase();
+                $(this).toggle(firstColumnText.indexOf(searchText) > -1)
+            });
+        });
+    });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "Admin/index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Send Message</h2>
+            <form action="{% url 'Admin:Feedback' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="user">Enter User ID :</label>
+                        <input type="text" id="user" name="user">
+                </div>
+                <div class="form-group">
+                    <label for="msg">Message:</label>
+                    <textarea class="form-control" id="msg" name="msg" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2> Messages</h2>
+            <ul class="list-group">
+                <!-- Loop through received messages from your database -->
+                {% for i in data %}
+                <li class="list-group-item">
+                    {% if i.direction == 1 %}
+                    <strong>To:</strong> {{ i.user.id }} <br> &nbsp;&nbsp;&nbsp; {{ i.user.name }}
+                    <br> &nbsp;&nbsp;&nbsp; {{ i.user.email }}
+                    {% else %}
+                    <strong>From :</strong> {{ i.user.id }} <br> &nbsp;&nbsp;&nbsp; {{ i.user.name }}
+                    <br> &nbsp;&nbsp;&nbsp; {{ i.user.email }}
+                
+                    {% endif %}
+                 
+                    <p>Message : {{ i.msg }} </p>
+                    <br>
+                    {% if i.direction == 1 %}
+                    {% if i.view_sts %}
+                    <span class="text-success">&#10004;&#10004;</span>
+                    {% else %}
+                    <span class="text-muted">&#10004;</span>
+                    {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+                <!-- Add more list items dynamically -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+    integrity="sha384-AvEHAe4+CGw/yZtV0kMv8TyssBtxc18JVvQVvcjzJV6CzqKkZXJHvThii8qzqipM" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shCj5Em+GLelJQ7i8RHz/Jgo3E93hx4D4Z6j5" crossorigin="anonymous">
+</script>
+
+{% endblock %}

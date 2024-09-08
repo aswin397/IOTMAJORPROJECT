@@ -1,0 +1,54 @@
+{% extends "User/index.html" %}
+
+{% block content %}
+
+<CENTER>
+    <H1> Payments  </H1>
+</CENTER>
+<br>
+<br>
+<table class="table" id="consumersTable" style="color: rgb(17, 17, 17);">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Billing Date</th>
+            <th>Month</th>
+            <th>KWH Usage</th>
+            <th>Rate</th>
+            <th>Bill</th>
+            <th>Payment Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consumer in bills %}
+        {% if consumer.status == 1 %}
+        <tr>
+            <td>{{ consumer.id }}</td>
+            <td>{{ consumer.BillGenerationdate }}</td>
+            <td>{{ consumer.month }}</td>
+            <td>{{ consumer.kwh }}</td>
+            <td>{{ consumer.rate }}</td>
+            <td><a href="{{ consumer.file.url }}" target="_blank">View File</a></td>
+            
+            <td>{% if consumer.status == 1 %}
+                Payment Done
+                {% else %}
+                Not Payed
+            {% endif %}</td>
+        </tr>
+        {% endif %}
+     
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+{% endblock %}

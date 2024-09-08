@@ -1,0 +1,50 @@
+{% extends "Admin/index.html" %}
+
+{% block content %}
+
+
+    <h1>Offices List</h1>
+    <table border="1" class="col-md-10">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Office Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for office in offices %}
+            <tr>
+                <td>{{ office.id }}</td>
+                <td>{{ office.name }}</td>
+                <td>{{ office.location }}</td>
+                <td>{{ office.phone_number }}</td>
+                <td>{{ office.email }}</td>
+                <td>{{ office.office_code }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<br>
+<br>
+<br<br>
+<br>
+<br>
+<br<br><br>
+<br>
+<br<br><br>
+<br>
+<br<br><br>
+<br>
+<br<br>
+<br>
+<br>
+<br<br><br>
+<br>
+<br<br><br>
+<br>
+<br<br>
+{% endblock %}

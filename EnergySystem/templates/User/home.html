@@ -1,0 +1,115 @@
+{% extends "User/index.html" %}
+
+{% block content %}
+<style>
+    .announcement {
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.announcement-content {
+    margin-bottom: 10px;
+}
+
+.card-header {
+    font-size: 1.2rem;
+}
+</style>
+<div class="content-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="text-center">Home Page</h1>
+                <hr>
+                {% if data %}
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h3 class="text-center">Announcements</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for announcement in data %}
+                        <div class="announcement">
+                            <div class="announcement-content">
+                                <p class="mb-0"><strong>{{ announcement.msg }}</strong></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <br>
+<br>
+<br>
+                <div id="electricity-usage">
+                    <h3 class="text-center mt-4">Electricity Usage</h3>
+                  <h4> <p class="text-center">Current Usage: <span id="current-usage">Loading...</span></p></h4> 
+                </div>
+<br>
+<br>
+<br>
+                <div id="electricity-usage2">
+                    <h3 class="text-center mt-4">Total Electricity Usage of this Month</h3>
+                  <h4> <p class="text-center"> Approximate KWH : <span id="current-usage3">Loading...</span></p></h4> 
+                  <h4> <p class="text-center"> Approximate Rate <span id="current-usage4">Loading...</span></p></h4>
+                  every 12 seconds this will update baased on your usage
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br><br>
+<br>
+<br>
+<script>
+    // Function to fetch current electricity usage
+    function fetchElectricityUsage() {
+        // Send request to server
+        // Update the URL below with the appropriate endpoint to fetch electricity usage
+        fetch('/User/get-electricity-usage')
+            .then(response => response.json())
+            .then(data => {
+                // Update current usage on the webpage
+                document.getElementById('current-usage').innerText = data.usage;
+            })
+            .catch(error => {
+                console.error('Error fetching electricity usage:', error);
+            });
+    }
+
+   
+    fetchElectricityUsage();
+
+    
+    setInterval(fetchElectricityUsage, 5000);
+
+
+
+
+    function fetchElectricityUsage2() {
+        // Send request to server
+        // Update the URL below with the appropriate endpoint to fetch electricity usage
+        fetch('/User/get-electricity-usage2')
+            .then(response => response.json())
+            .then(data => {
+                // Update current usage on the webpage
+                document.getElementById('current-usage3').innerText = data.usage;
+                document.getElementById('current-usage4').innerText = "RS. "+data.rate;
+            })
+            .catch(error => {
+                console.error('Error fetching electricity usage:', error);
+            });
+    }
+    fetchElectricityUsage2();
+    setInterval(fetchElectricityUsage2, 12000);
+
+
+</script>
+
+{% endblock %}
